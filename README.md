@@ -10,4 +10,5 @@
 - cubos-cli -c ted -ts
 - cubos-cli -c ted -ts -m cpf:string value:number
 - cubos-cli -c ted -f getTed#id:int createTed#value:int,cpf:string -ts
+- cubos-cli -c ted -f getTed#id:int createTed#value:int,cpf:string findTedByUserd#cpf:string -ts
 - cubos-cli -c ted -f getTed#id:int createTed#value:int,cpf:string -m cpf:string value:number -ts
