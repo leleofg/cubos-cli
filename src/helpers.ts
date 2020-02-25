@@ -41,7 +41,7 @@ export function replaceRepositoriesDB(
     }
 
     if (line.indexOf("db: {") > 0) {
-      lineDB = checkObject(file, component.toLowerCase(), Number(index) + 1);
+      lineDB = checkObject(file, component.toLowerCase(), index + 1);
       if (path === "src/api.ts") {
         lineToReplaceDB = `    ${component.toLowerCase()}: ${firstWordToUppercase(
           component
@@ -64,7 +64,7 @@ function checkObject(file: string[], compare: string, index: number): number {
   const currentKey = current[0].trim();
 
   if (!strcmp(currentKey, compare)) {
-    return checkObject(file, compare, Number(index) + 1);
+    return checkObject(file, compare, index + 1);
   }
 
   return index;
