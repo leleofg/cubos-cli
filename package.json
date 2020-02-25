@@ -1,6 +1,6 @@
 {
   "name": "cubos-cli",
-  "version": "1.0.2",
+  "version": "1.0.5",
   "description": "Cubos CLI",
   "main": "bin/index.js",
   "scripts": {

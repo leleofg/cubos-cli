@@ -5,7 +5,7 @@ import pluralize from "pluralize";
 export function generateModel(component: string, fields?: string[]) {
   appendFileSync("src/models/index.ts", `export * from "./${firstWordToUppercase(component)}";\n`);
 
-  const scriptModel = `import { Entity, PrimaryGeneratedColumn } from "typeorm";
+  const scriptModel = `import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({ name: "${pluralize(component)}" })
 export class ${firstWordToUppercase(component)} {

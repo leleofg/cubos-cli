@@ -23,7 +23,7 @@ export function generateFunctions(component: string, functions?: string[]) {
 
                 return `\n
 api.fn.${nameFunction} = async (ctx, { ${argsNames} }) => {
-    return "test";
+  return "test";
 };`;
               }
 
@@ -31,7 +31,7 @@ api.fn.${nameFunction} = async (ctx, { ${argsNames} }) => {
 
               return `\n
 api.fn.${nameFunction} = async (ctx, { ${nameArg} }) => {
-    return "test";
+  return "test";
 };`;
             }
 
