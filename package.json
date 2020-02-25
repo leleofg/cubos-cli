@@ -1,13 +1,13 @@
 {
   "name": "cubos-cli",
   "version": "1.0.0",
-  "description": "",
+  "description": "Cubos CLI",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Leonardo Farias",
   "license": "ISC",
   "devDependencies": {
     "@types/command-line-args": "^5.0.0",
