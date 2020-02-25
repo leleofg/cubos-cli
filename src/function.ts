@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/require-array-sort-compare */
 import { appendFileSync } from "fs";
 import { firstWordToUppercase } from "./helpers";
 
@@ -19,20 +20,20 @@ export function generateFunctions(component: string, functions?: string[]) {
 
                     return nameArg;
                   })
-                  .join(", ");
+                  .sort();
 
-                return `\n
-api.fn.${nameFunction} = async (ctx, { ${argsNames} }) => {
-  return "test";
-};`;
+                return `
+api.fn.${nameFunction} = async (ctx, { ${argsNames.join(", ")} }) => {
+  return \`\${${argsNames.join(" - ")}}\`;
+};\n`;
               }
 
               const [nameArg] = args[0].split(":");
 
-              return `\n
+              return `
 api.fn.${nameFunction} = async (ctx, { ${nameArg} }) => {
-  return "test";
-};`;
+  return \`\${${nameArg}}\`;
+};\n`;
             }
 
             return "";
@@ -40,7 +41,7 @@ api.fn.${nameFunction} = async (ctx, { ${nameArg} }) => {
           .join("")
       : `\n
 api.fn.get${firstWordToUppercase(component)} = async ctx => {
-  return "test";
+  return "";
 };`,
   );
 }

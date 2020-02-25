@@ -42,8 +42,8 @@ if (options.help) {
       optionList: [
         {
           alias: "c",
-          description: "Controller you want to create.",
-          name: "controller",
+          description: "Component you want to create.",
+          name: "component",
           type: String,
         },
         {
@@ -103,11 +103,14 @@ if (options.help) {
 }
 
 if (!options.component) {
-  throw new Error("You need to provide the component");
+  throw new Error("You need to provide the component.\n\ncubos-cli -h for more information");
 }
 
 generateController(options.component);
-generateFunctions(options.component, options.functions);
+
+if (options.functions) {
+  generateFunctions(options.component, options.functions);
+}
 
 if (options.sdkgen) {
   generateSdkgen(options.component, options.functions);
