@@ -8,11 +8,18 @@ import { generateTest } from "./test";
 import { generateModel } from "./model";
 import { generateRepository } from "./repository";
 
+enum Database {
+  typeorm,
+  knex,
+  puresql,
+}
+
 const optionDefinitions = [
   { alias: "c", name: "component", type: String },
   { alias: "f", multiple: true, name: "functions", type: String },
-  { alias: "s", name: "sdkgen", type: Boolean },
   { alias: "m", multiple: true, name: "model", type: String },
+  { alias: "d", defaultValue: Database.typeorm, name: "database", type: String },
+  { alias: "s", name: "sdkgen", type: Boolean },
   { alias: "r", name: "repository", type: Boolean },
   { alias: "t", name: "test", type: Boolean },
   { alias: "h", name: "help", type: Boolean },
@@ -21,8 +28,9 @@ const optionDefinitions = [
 const options: {
   component?: string;
   functions?: string[];
-  sdkgen?: boolean;
   model?: string[];
+  database?: Database;
+  sdkgen?: boolean;
   repository?: boolean;
   test?: boolean;
   help?: boolean;
@@ -53,16 +61,22 @@ if (options.help) {
           type: String,
         },
         {
-          alias: "s",
-          description: "Provide if you want create sdkgen functions.",
-          name: "sdkgen",
-          type: Boolean,
-        },
-        {
           alias: "m",
           description: "Model you want to create.",
           name: "model",
           type: String,
+        },
+        {
+          alias: "d",
+          description: "SQL Database that you want to use.",
+          name: "database",
+          type: String,
+        },
+        {
+          alias: "s",
+          description: "Provide if you want create sdkgen functions.",
+          name: "sdkgen",
+          type: Boolean,
         },
         {
           alias: "r",
@@ -106,11 +120,12 @@ if (!options.component) {
   throw new Error("You need to provide the component.\n\ncubos-cli -h for more information");
 }
 
-generateController(options.component);
-
-if (options.functions) {
-  generateFunctions(options.component, options.functions);
+if (options.database !== Database.typeorm) {
+  throw new Error("For now works only with typeorm.");
 }
+
+generateController(options.component);
+generateFunctions(options.component, options.functions);
 
 if (options.sdkgen) {
   generateSdkgen(options.component, options.functions);
@@ -125,5 +140,9 @@ if (options.model) {
 }
 
 if (options.repository) {
+  if (!options.model) {
+    throw new Error("You need to provide model when use repository.");
+  }
+
   generateRepository(options.component);
 }
