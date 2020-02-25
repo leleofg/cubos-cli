@@ -6,7 +6,7 @@
 
 ## Use:
 - cubos-cli -h:
-- ubos-cli -c ted 
+- cubos-cli -c ted 
 - cubos-cli -c ted -s
 - cubos-cli -c ted -ts
 - cubos-cli -c ted -ts -m cpf:string value:number
