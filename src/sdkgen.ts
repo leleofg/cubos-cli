@@ -30,7 +30,7 @@ export function generateSdkgen(controller: string, functions?: string[]) {
               return `fn ${nameFunction}(${nameArg}: ${typeArg}): string\n`;
             }
 
-            return "";
+            return `fn ${nameFunction}(): string\n`;
           })
           .join("")
       : `fn get${firstWordToUppercase(controller)}(): string\n`,

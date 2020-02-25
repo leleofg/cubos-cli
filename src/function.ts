@@ -39,12 +39,15 @@ api.fn.${nameFunction} = async (ctx, { ${nameArg} }) => {
 };\n`;
             }
 
-            return "";
+            return `
+api.fn.${nameFunction} = async ctx => {
+  return "";
+};\n`;
           })
           .join("")
-      : `\n
+      : `
 api.fn.get${firstWordToUppercase(component)} = async ctx => {
   return "";
-};`,
+};\n`,
   );
 }
