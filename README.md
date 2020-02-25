@@ -1,7 +1,6 @@
 # Cubos CLI
 
 ## Instal:
-- npm i -D cubos-cli
 - npm i -g cubos-cli
 
 ## Use:
