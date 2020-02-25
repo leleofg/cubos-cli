@@ -14,9 +14,12 @@ export function generateFunctions(component: string, functions?: string[]) {
               const args = argsFunction.split(",");
 
               if (args.length > 1) {
+                let a = "";
                 const argsNames = args
                   .map(arg => {
                     const [nameArg] = arg.split(":");
+
+                    a += `\${${nameArg}} `;
 
                     return nameArg;
                   })
@@ -24,7 +27,7 @@ export function generateFunctions(component: string, functions?: string[]) {
 
                 return `
 api.fn.${nameFunction} = async (ctx, { ${argsNames.join(", ")} }) => {
-  return \`\${${argsNames.join(" - ")}}\`;
+  return \`${a}\`;
 };\n`;
               }
 
