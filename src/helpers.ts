@@ -12,11 +12,18 @@ export function strcmp(wordA: string, wordB: string) {
   return true;
 }
 
-export function replaceRepositoriesDB(
-  component: string,
-  file: string[],
-  path: string
-) {
+function checkObject(file: string[], compare: string, index: number): number {
+  const current = file[index].split(":");
+  const currentKey = current[0].trim();
+
+  if (!strcmp(currentKey, compare)) {
+    return checkObject(file, compare, index + 1);
+  }
+
+  return index;
+}
+
+export function replaceRepositoriesDB(component: string, file: string[], path: string) {
   let numberLine = 0;
   let lineToReplaceRepositories = "";
   let lineDB = 0;
@@ -34,6 +41,7 @@ export function replaceRepositoriesDB(
 
       arrayOfRepositories.push(`${firstWordToUppercase(component)}Repository`);
 
+      // eslint-disable-next-line @typescript-eslint/require-array-sort-compare
       arrayOfRepositories.sort();
       const newRepositories = arrayOfRepositories.join(", ");
 
@@ -43,12 +51,10 @@ export function replaceRepositoriesDB(
     if (line.indexOf("db: {") > 0) {
       lineDB = checkObject(file, component.toLowerCase(), index + 1);
       if (path === "src/api.ts") {
-        lineToReplaceDB = `    ${component.toLowerCase()}: ${firstWordToUppercase(
-          component
-        )}Repository;`;
+        lineToReplaceDB = `    ${component.toLowerCase()}: ${firstWordToUppercase(component)}Repository;`;
       } else {
         lineToReplaceDB = `        ${component.toLowerCase()}: connection.getCustomRepository(${firstWordToUppercase(
-          component
+          component,
         )}Repository),`;
       }
     }
@@ -57,15 +63,4 @@ export function replaceRepositoriesDB(
   file.splice(numberLine, 1, lineToReplaceRepositories);
   file.splice(lineDB, 0, lineToReplaceDB);
   writeFileSync(path, file.join("\n"));
-}
-
-function checkObject(file: string[], compare: string, index: number): number {
-  const current = file[index].split(":");
-  const currentKey = current[0].trim();
-
-  if (!strcmp(currentKey, compare)) {
-    return checkObject(file, compare, index + 1);
-  }
-
-  return index;
 }

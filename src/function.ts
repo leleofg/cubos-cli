@@ -8,6 +8,7 @@ export function generateFunctions(component: string, functions?: string[]) {
       ? functions
           .map(fun => {
             const [nameFunction, argsFunction] = fun.split("#");
+
             if (argsFunction) {
               const args = argsFunction.split(",");
 
@@ -15,6 +16,7 @@ export function generateFunctions(component: string, functions?: string[]) {
                 const argsNames = args
                   .map(arg => {
                     const [nameArg] = arg.split(":");
+
                     return nameArg;
                   })
                   .join(", ");
@@ -32,11 +34,13 @@ api.fn.${nameFunction} = async (ctx, { ${nameArg} }) => {
     return "test";
 };`;
             }
+
+            return "";
           })
           .join("")
       : `\n
 api.fn.get${firstWordToUppercase(component)} = async ctx => {
   return "test";
-};`
+};`,
   );
 }

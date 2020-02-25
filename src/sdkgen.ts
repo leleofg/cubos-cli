@@ -1,4 +1,4 @@
-import { writeFileSync, appendFileSync } from "fs";
+import { appendFileSync, writeFileSync } from "fs";
 import { firstWordToUppercase } from "./helpers";
 
 export function generateSdkgen(controller: string, functions?: string[]) {
@@ -17,6 +17,7 @@ export function generateSdkgen(controller: string, functions?: string[]) {
                   .map(arg => {
                     const [nameArg, typeArg] = arg.split(":");
                     // TODO: need validate typeArg to primitive types sdkgen
+
                     return `${nameArg}: ${typeArg}`;
                   })
                   .join(", ");
@@ -26,9 +27,11 @@ export function generateSdkgen(controller: string, functions?: string[]) {
 
               return `fn ${nameFunction}(): string\n`;
             }
+
+            return "";
           })
           .join("")
-      : `fn get${firstWordToUppercase(controller)}(): string\n`
+      : `fn get${firstWordToUppercase(controller)}(): string\n`,
   );
   appendFileSync("src/api.sdkgen", `import "./schemas/${controller}"`);
 }

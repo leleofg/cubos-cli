@@ -8,13 +8,13 @@ import { generateModel } from "./model";
 import { generateRepository } from "./repository";
 
 const optionDefinitions = [
-  { name: "component", alias: "c", type: String },
-  { name: "functions", alias: "f", type: String, multiple: true },
-  { name: "sdkgen", alias: "s", type: Boolean },
-  { name: "model", alias: "m", type: String, multiple: true },
-  { name: "repository", alias: "r", type: Boolean },
-  { name: "test", alias: "t", type: Boolean },
-  { name: "help", alias: "h", type: Boolean }
+  { alias: "c", name: "component", type: String },
+  { alias: "f", multiple: true, name: "functions", type: String },
+  { alias: "s", name: "sdkgen", type: Boolean },
+  { alias: "m", multiple: true, name: "model", type: String },
+  { alias: "r", name: "repository", type: Boolean },
+  { alias: "t", name: "test", type: Boolean },
+  { alias: "h", name: "help", type: Boolean },
 ];
 
 const options: {
@@ -27,82 +27,82 @@ const options: {
   help?: boolean;
   _unknown?: string[];
 } = commandLineArgs(optionDefinitions, {
-  stopAtFirstUnknown: true
+  stopAtFirstUnknown: true,
 });
 
 if (options.help) {
   const sections = [
     {
+      content: "Generates codes to make your life easier.",
       header: "Cubos CLI",
-      content: "Generates codes to make your life easier."
     },
     {
       header: "Options",
       optionList: [
         {
-          name: "controller",
-          description: "Controller you want to create.",
           alias: "c",
-          type: String
+          description: "Controller you want to create.",
+          name: "controller",
+          type: String,
         },
         {
-          name: "functions",
-          description: "Provide functions you want to create.",
           alias: "f",
-          type: String
+          description: "Provide functions you want to create.",
+          name: "functions",
+          type: String,
         },
         {
-          name: "sdkgen",
-          description: "Provide if you want create sdkgen functions.",
           alias: "s",
-          type: Boolean
+          description: "Provide if you want create sdkgen functions.",
+          name: "sdkgen",
+          type: Boolean,
         },
         {
-          name: "model",
-          description: "Model you want to create.",
           alias: "m",
-          type: String
+          description: "Model you want to create.",
+          name: "model",
+          type: String,
         },
         {
-          name: "repository",
-          description: "Provide if you want create repository file.",
           alias: "r",
-          type: Boolean
+          description: "Provide if you want create repository file.",
+          name: "repository",
+          type: Boolean,
         },
         {
-          name: "test",
-          description: "Provide if you want create tests.",
           alias: "t",
-          type: Boolean
+          description: "Provide if you want create tests.",
+          name: "test",
+          type: Boolean,
         },
         {
-          name: "help",
-          description: "Print the guide to use this CLI.",
           alias: "h",
-          type: Boolean
-        }
-      ]
+          description: "Print the guide to use this CLI.",
+          name: "help",
+          type: Boolean,
+        },
+      ],
     },
     {
-      header: "Examples",
       content: [
         {
           desc: "1. Create a controller. ",
-          example: "$ npx cubos-cli -c ted"
-        }
-      ]
+          example: "$ npx cubos-cli -c ted",
+        },
+      ],
+      header: "Examples",
     },
     {
-      content: "Project home: {underline https://github.com/leleofg/cubos-cli}"
-    }
+      content: "Project home: {underline https://github.com/leleofg/cubos-cli}",
+    },
   ];
+
   console.log(commandLineUsage(sections));
-  process.exit(0);
+  throw new Error("Help");
 }
 
 if (!options.component) {
-  console.log("You need to provide the component");
-  process.exit(0);
+  throw new Error("You need to provide the component");
 }
 
 generateController(options.component);

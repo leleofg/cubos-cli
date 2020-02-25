@@ -2,18 +2,40 @@
   "name": "cubos-cli",
   "version": "1.0.0",
   "description": "Cubos CLI",
-  "main": "index.js",
+  "main": "src/index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "eslint:fix": "eslint --fix '**/*.{t,j}s'",
+    "eslint:check": "eslint '**/*.{t,j}s'",
+    "build": "tsc"
   },
-  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leleofg/cubos-cli.git"
+  },
+  "keywords": [
+    "cli",
+    "typescript"
+  ],
   "author": "Leonardo Farias",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/leleofg/cubos-cli/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://github.com/leleofg/cubos-cli#readme",
   "devDependencies": {
     "@types/command-line-args": "^5.0.0",
     "@types/command-line-usage": "^5.0.1",
     "@types/node": "^13.7.4",
     "@types/pluralize": "0.0.29",
+    "@typescript-eslint/eslint-plugin": "^2.21.0",
+    "@typescript-eslint/parser": "^2.21.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "prettier": "^1.19.1",
     "typescript": "^3.8.2"
   },
   "dependencies": {

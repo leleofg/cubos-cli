@@ -1,12 +1,9 @@
-import { writeFileSync, appendFileSync } from "fs";
+import { appendFileSync, writeFileSync } from "fs";
 import { firstWordToUppercase } from "./helpers";
 import pluralize from "pluralize";
 
 export function generateModel(component: string, fields?: string[]) {
-  appendFileSync(
-    "src/models/index.ts",
-    `export * from "./${firstWordToUppercase(component)}";\n`
-  );
+  appendFileSync("src/models/index.ts", `export * from "./${firstWordToUppercase(component)}";\n`);
 
   const scriptModel = `import { Entity, PrimaryGeneratedColumn } from "typeorm";
 
@@ -20,6 +17,7 @@ export class ${firstWordToUppercase(component)} {
       ? fields
           .map(field => {
             const [nameField, typeField] = field.split(":");
+
             return `@Column()
   ${nameField}!: ${typeField};
 `;
@@ -29,8 +27,5 @@ export class ${firstWordToUppercase(component)} {
   }}
 `;
 
-  writeFileSync(
-    `src/models/${firstWordToUppercase(component)}.ts`,
-    scriptModel
-  );
+  writeFileSync(`src/models/${firstWordToUppercase(component)}.ts`, scriptModel);
 }
