@@ -5,7 +5,7 @@
 - npm i -g cubos-cli
 
 ## Use:
-- cubos-cli -h:
+- cubos-cli -h
 - cubos-cli -c ted 
 - cubos-cli -c ted -s
 - cubos-cli -c ted -ts
