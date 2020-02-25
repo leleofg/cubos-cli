@@ -25,7 +25,9 @@ export function generateSdkgen(controller: string, functions?: string[]) {
                 return `fn ${nameFunction}(${argsAndTypes}): string\n`;
               }
 
-              return `fn ${nameFunction}(): string\n`;
+              const [nameArg, typeArg] = args[0].split(":");
+
+              return `fn ${nameFunction}(${nameArg}: ${typeArg}): string\n`;
             }
 
             return "";
