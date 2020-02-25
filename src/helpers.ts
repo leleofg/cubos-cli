@@ -70,7 +70,7 @@ export function checkLineExistsInFile(path: string, element: string) {
     .toString()
     .split("\n");
 
-  for (const line of file.entries()) {
+  for (const line of file) {
     if (line.indexOf(element.toLocaleLowerCase()) > 0) {
       return true;
     }

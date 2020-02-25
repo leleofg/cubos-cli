@@ -3,7 +3,6 @@ import commandLineArgs from "command-line-args";
 import commandLineUsage from "command-line-usage";
 import { generateController } from "./controller";
 import { generateFunctions } from "./function";
-import { generateSdkgen } from "./sdkgen";
 import { generateTest } from "./test";
 import { generateModel } from "./model";
 import { generateRepository } from "./repository";
@@ -132,15 +131,8 @@ if (options.database !== Database.typeorm) {
   throw new Error("For now works only with typeorm.");
 }
 
-generateController(options.component);
-generateFunctions(options.component, options.functions);
-
-if (options.sdkgen) {
-  generateSdkgen(options.component, options.functions);
-}
-
-if (options.test) {
-  generateTest(options.component, options.functions);
+if (generateController(options.component)) {
+  generateFunctions(options.component, options.functions);
 }
 
 if (options.model) {
@@ -153,4 +145,8 @@ if (options.repository) {
   }
 
   generateRepository(options.component);
+}
+
+if (options.test) {
+  generateTest(options.component, options.functions);
 }
