@@ -1,7 +1,7 @@
 import { writeFileSync } from "fs";
 import { firstWordToUppercase } from "./helpers";
 
-export function generateTest(controller: string, functions?: string[]) {
+export function generateTest(component: string, functions?: string[]) {
   const scriptTest = `import { apiTestWrapper } from "@sdkgen/node-runtime";
 import { api, Context } from "../src/api";
 import "../src/controllers";
@@ -9,7 +9,7 @@ import { makeCtx } from "./helpers";
 
 const { fn } = apiTestWrapper(api);
 
-describe("${firstWordToUppercase(controller)}", () => {
+describe("${firstWordToUppercase(component)}", () => {
   let ctx: Context;
 
   beforeAll(() => {
@@ -30,8 +30,8 @@ describe("${firstWordToUppercase(controller)}", () => {
 `;
           })
           .join("\n  ")
-      : `test("get${firstWordToUppercase(controller)}", async () => {
-    const res = await fn.get${firstWordToUppercase(controller)}(ctx, {});
+      : `test("get${firstWordToUppercase(component)}", async () => {
+    const res = await fn.get${firstWordToUppercase(component)}(ctx, {});
 
     expect(res).toBe("test");
   });
@@ -39,5 +39,5 @@ describe("${firstWordToUppercase(controller)}", () => {
   }});
 `;
 
-  writeFileSync(`tests/${controller}.test.ts`, scriptTest);
+  writeFileSync(`tests/${component}.test.ts`, scriptTest);
 }

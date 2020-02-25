@@ -5,9 +5,10 @@ import { generateFunctions } from "./function";
 import { generateSdkgen } from "./sdkgen";
 import { generateTest } from "./test";
 import { generateModel } from "./model";
+import { generateRepository } from "./repository";
 
 const optionDefinitions = [
-  { name: "controller", alias: "c", type: String },
+  { name: "component", alias: "c", type: String },
   { name: "functions", alias: "f", type: String, multiple: true },
   { name: "sdkgen", alias: "s", type: Boolean },
   { name: "model", alias: "m", type: String, multiple: true },
@@ -17,7 +18,7 @@ const optionDefinitions = [
 ];
 
 const options: {
-  controller?: string;
+  component?: string;
   functions?: string[];
   sdkgen?: boolean;
   model?: string[];
@@ -99,22 +100,26 @@ if (options.help) {
   process.exit(0);
 }
 
-if (!options.controller) {
-  console.log("You need to provide controller");
+if (!options.component) {
+  console.log("You need to provide the component");
   process.exit(0);
 }
 
-generateController(options.controller);
-generateFunctions(options.controller, options.functions);
+generateController(options.component);
+generateFunctions(options.component, options.functions);
 
 if (options.sdkgen) {
-  generateSdkgen(options.controller, options.functions);
+  generateSdkgen(options.component, options.functions);
 }
 
 if (options.test) {
-  generateTest(options.controller, options.functions);
+  generateTest(options.component, options.functions);
 }
 
 if (options.model) {
-  generateModel(options.controller, options.model);
+  generateModel(options.component, options.model);
+}
+
+if (options.repository) {
+  generateRepository(options.component);
 }

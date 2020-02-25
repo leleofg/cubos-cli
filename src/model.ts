@@ -2,16 +2,16 @@ import { writeFileSync, appendFileSync } from "fs";
 import { firstWordToUppercase } from "./helpers";
 import pluralize from "pluralize";
 
-export function generateModel(controller: string, fields?: string[]) {
+export function generateModel(component: string, fields?: string[]) {
   appendFileSync(
     "src/models/index.ts",
-    `export * from "./${firstWordToUppercase(controller)}";\n`
+    `export * from "./${firstWordToUppercase(component)}";\n`
   );
 
   const scriptModel = `import { Entity, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity({ name: "${pluralize(controller)}" })
-export class ${firstWordToUppercase(controller)} {
+@Entity({ name: "${pluralize(component)}" })
+export class ${firstWordToUppercase(component)} {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
@@ -30,7 +30,7 @@ export class ${firstWordToUppercase(controller)} {
 `;
 
   writeFileSync(
-    `src/models/${firstWordToUppercase(controller)}.ts`,
+    `src/models/${firstWordToUppercase(component)}.ts`,
     scriptModel
   );
 }

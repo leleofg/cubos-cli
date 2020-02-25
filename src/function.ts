@@ -1,9 +1,9 @@
 import { appendFileSync } from "fs";
 import { firstWordToUppercase } from "./helpers";
 
-export function generateFunctions(controller: string, functions?: string[]) {
+export function generateFunctions(component: string, functions?: string[]) {
   appendFileSync(
-    `src/controllers/${controller}.ts`,
+    `src/controllers/${component}.ts`,
     functions && functions.length
       ? functions
           .map(fun => {
@@ -35,7 +35,7 @@ api.fn.${nameFunction} = async (ctx, { ${nameArg} }) => {
           })
           .join("")
       : `\n
-api.fn.get${firstWordToUppercase(controller)} = async ctx => {
+api.fn.get${firstWordToUppercase(component)} = async ctx => {
   return "test";
 };`
   );
