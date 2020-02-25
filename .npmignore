@@ -1,3 +1,6 @@
-src/
+src
 package-lock.json
 tsconfig.json
+.prettierrc
+.eslintrc.json
+tsconfig.tsbuildinfo
