@@ -35,5 +35,5 @@ export function generateSdkgen(controller: string, functions?: string[]) {
           .join("")
       : `fn get${firstWordToUppercase(controller)}(): string\n`,
   );
-  appendFileSync("src/api.sdkgen", `import "./schemas/${controller}"`);
+  appendFileSync("src/api.sdkgen", `import "./schemas/${controller}"\n`);
 }
