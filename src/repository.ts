@@ -1,8 +1,10 @@
 import { appendFileSync, readFileSync, writeFileSync } from "fs";
-import { firstWordToUppercase, replaceRepositoriesDB } from "./helpers";
+import { checkLineExistsInFile, firstWordToUppercase, replaceRepositoriesDB } from "./helpers";
 
 export function generateRepository(component: string) {
-  appendFileSync("src/repositories/index.ts", `export * from "./${firstWordToUppercase(component)}Repository";\n`);
+  if (checkLineExistsInFile("src/repositories/index.ts", component)) {
+    return;
+  }
 
   const scriptRepository = `import { EntityRepository, Repository } from "typeorm";
 import { ${firstWordToUppercase(component)} } from "../models";
@@ -12,6 +14,7 @@ export class ${firstWordToUppercase(component)}Repository extends Repository<${f
 `;
 
   writeFileSync(`src/repositories/${firstWordToUppercase(component)}Repository.ts`, scriptRepository);
+  appendFileSync("src/repositories/index.ts", `export * from "./${firstWordToUppercase(component)}Repository";\n`);
 
   // Api
   const fileAPI = readFileSync("src/api.ts")

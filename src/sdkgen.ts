@@ -1,9 +1,13 @@
 import { appendFileSync, writeFileSync } from "fs";
-import { firstWordToUppercase } from "./helpers";
+import { checkLineExistsInFile, firstWordToUppercase } from "./helpers";
 
-export function generateSdkgen(controller: string, functions?: string[]) {
+export function generateSdkgen(component: string, functions?: string[]) {
+  if (checkLineExistsInFile("src/api.sdkgen", component)) {
+    return;
+  }
+
   writeFileSync(
-    `src/schemas/${controller}.sdkgen`,
+    `src/schemas/${component}.sdkgen`,
     functions && functions.length
       ? functions
           .map(fun => {
@@ -33,7 +37,7 @@ export function generateSdkgen(controller: string, functions?: string[]) {
             return `fn ${nameFunction}(): string\n`;
           })
           .join("")
-      : `fn get${firstWordToUppercase(controller)}(): string\n`,
+      : `fn get${firstWordToUppercase(component)}(): string\n`,
   );
-  appendFileSync("src/api.sdkgen", `import "./schemas/${controller}"\n`);
+  appendFileSync("src/api.sdkgen", `import "./schemas/${component}"\n`);
 }

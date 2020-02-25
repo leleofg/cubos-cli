@@ -101,8 +101,16 @@ if (options.help) {
     {
       content: [
         {
-          desc: "1. Create a controller. ",
+          desc: "1. Create a controller.",
           example: "$ npx cubos-cli -c ted",
+        },
+        {
+          desc: "2. Create a controller with sdkgen file.",
+          example: "$ npx cubos-cli -c ted -s",
+        },
+        {
+          desc: "3. Create a controller, sdkgen file and tests.",
+          example: "$ npx cubos-cli -c ted -st",
         },
       ],
       header: "Examples",
@@ -113,7 +121,7 @@ if (options.help) {
   ];
 
   console.log(commandLineUsage(sections));
-  throw new Error("Help");
+  throw new Error("");
 }
 
 if (!options.component) {

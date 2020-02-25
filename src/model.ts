@@ -1,9 +1,11 @@
 import { appendFileSync, writeFileSync } from "fs";
-import { firstWordToUppercase } from "./helpers";
+import { checkLineExistsInFile, firstWordToUppercase } from "./helpers";
 import pluralize from "pluralize";
 
 export function generateModel(component: string, fields?: string[]) {
-  appendFileSync("src/models/index.ts", `export * from "./${firstWordToUppercase(component)}";\n`);
+  if (checkLineExistsInFile("src/models/index.ts", component)) {
+    return;
+  }
 
   const scriptModel = `import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
@@ -28,4 +30,5 @@ export class ${firstWordToUppercase(component)} {
 `;
 
   writeFileSync(`src/models/${firstWordToUppercase(component)}.ts`, scriptModel);
+  appendFileSync("src/models/index.ts", `export * from "./${firstWordToUppercase(component)}";\n`);
 }

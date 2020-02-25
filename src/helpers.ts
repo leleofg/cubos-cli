@@ -1,4 +1,4 @@
-import { writeFileSync } from "fs";
+import { readFileSync, writeFileSync } from "fs";
 
 export function firstWordToUppercase(word: string) {
   return `${word.substring(0, 1).toUpperCase()}${word.substring(1)}`;
@@ -63,4 +63,18 @@ export function replaceRepositoriesDB(component: string, file: string[], path: s
   file.splice(numberLine, 1, lineToReplaceRepositories);
   file.splice(lineDB, 0, lineToReplaceDB);
   writeFileSync(path, file.join("\n"));
+}
+
+export function checkLineExistsInFile(path: string, element: string) {
+  const file = readFileSync("src/controllers/index.ts")
+    .toString()
+    .split("\n");
+
+  for (const line of file.entries()) {
+    if (line.indexOf(element.toLocaleLowerCase()) > 0) {
+      return true;
+    }
+  }
+
+  return false;
 }
