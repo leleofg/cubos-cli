@@ -4,12 +4,13 @@ import { generateController } from "./controller";
 import { generateFunctions } from "./function";
 import { generateSdkgen } from "./sdkgen";
 import { generateTest } from "./test";
+import { generateModel } from "./model";
 
 const optionDefinitions = [
   { name: "controller", alias: "c", type: String },
   { name: "functions", alias: "f", type: String, multiple: true },
   { name: "sdkgen", alias: "s", type: Boolean },
-  { name: "model", alias: "l", type: Boolean },
+  { name: "model", alias: "m", type: String, multiple: true },
   { name: "repository", alias: "r", type: Boolean },
   { name: "test", alias: "t", type: Boolean },
   { name: "help", alias: "h", type: Boolean }
@@ -19,7 +20,7 @@ const options: {
   controller?: string;
   functions?: string[];
   sdkgen?: boolean;
-  model?: boolean;
+  model?: string[];
   repository?: boolean;
   test?: boolean;
   help?: boolean;
@@ -57,9 +58,9 @@ if (options.help) {
         },
         {
           name: "model",
-          description: "Provide if you want create model file.",
+          description: "Model you want to create.",
           alias: "m",
-          type: Boolean
+          type: String
         },
         {
           name: "repository",
@@ -99,10 +100,9 @@ if (options.help) {
 }
 
 if (!options.controller) {
+  console.log("You need to provide controller");
   process.exit(0);
 }
-
-console.log(options);
 
 generateController(options.controller);
 generateFunctions(options.controller, options.functions);
@@ -113,4 +113,8 @@ if (options.sdkgen) {
 
 if (options.test) {
   generateTest(options.controller, options.functions);
+}
+
+if (options.model) {
+  generateModel(options.controller, options.model);
 }
