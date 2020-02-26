@@ -66,7 +66,7 @@ export function replaceRepositoriesDB(component: string, file: string[], path: s
 }
 
 export function checkLineExistsInFile(path: string, element: string) {
-  const file = readFileSync("src/controllers/index.ts")
+  const file = readFileSync(path)
     .toString()
     .split("\n");
 
