@@ -6,6 +6,7 @@ import { generateFunctions } from "./function";
 import { generateTest } from "./test";
 import { generateModel } from "./model";
 import { generateRepository } from "./repository";
+import { generateSdkgen } from "./sdkgen";
 
 enum Database {
   typeorm,
@@ -18,7 +19,6 @@ const optionDefinitions = [
   { alias: "f", multiple: true, name: "functions", type: String },
   { alias: "m", multiple: true, name: "model", type: String },
   { alias: "d", defaultValue: Database.typeorm, name: "database", type: String },
-  { alias: "s", name: "sdkgen", type: Boolean },
   { alias: "r", name: "repository", type: Boolean },
   { alias: "t", name: "test", type: Boolean },
   { alias: "h", name: "help", type: Boolean },
@@ -29,7 +29,6 @@ const options: {
   functions?: string[];
   model?: string[];
   database?: Database;
-  sdkgen?: boolean;
   repository?: boolean;
   test?: boolean;
   help?: boolean;
@@ -72,12 +71,6 @@ if (options.help) {
           type: String,
         },
         {
-          alias: "s",
-          description: "Provide if you want create sdkgen functions.",
-          name: "sdkgen",
-          type: Boolean,
-        },
-        {
           alias: "r",
           description: "Provide if you want create repository file.",
           name: "repository",
@@ -104,12 +97,17 @@ if (options.help) {
           example: "$ npx cubos-cli -c ted",
         },
         {
-          desc: "2. Create a controller with sdkgen file.",
-          example: "$ npx cubos-cli -c ted -s",
+          desc: "2. Create a controller with tests.",
+          example: "$ npx cubos-cli -c ted -t",
         },
         {
-          desc: "3. Create a controller, sdkgen file and tests.",
-          example: "$ npx cubos-cli -c ted -st",
+          desc: "3. Create a controller with the function addSegure and tests.",
+          example: "$ npx cubos-cli -c segure -f addSegure#name:string,info:string -t",
+        },
+        {
+          desc: "4. Create a controller with functions and create a model",
+          example:
+            "npx cubos-cli -c segure -f addSegure#name:string,info:string updateSegure#id:string,name:string,info:string -m name:string info:string",
         },
       ],
       header: "Examples",
@@ -134,6 +132,8 @@ if (options.database !== Database.typeorm) {
 if (generateController(options.component)) {
   generateFunctions(options.component, options.functions);
 }
+
+generateSdkgen(options.component, options.functions);
 
 if (options.model) {
   generateModel(options.component, options.model);

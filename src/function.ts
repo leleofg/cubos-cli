@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/require-array-sort-compare */
 import { appendFileSync } from "fs";
 import { firstWordToUppercase } from "./helpers";
-import { generateSdkgen } from "./sdkgen";
 
 export function generateFunctions(component: string, functions?: string[]) {
   appendFileSync(
@@ -51,5 +50,4 @@ api.fn.get${firstWordToUppercase(component)} = async ctx => {
   return "";
 };\n`,
   );
-  generateSdkgen(component, functions);
 }
