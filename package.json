@@ -1,6 +1,6 @@
 {
   "name": "cubos-cli",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "description": "Cubos CLI",
   "main": "bin/index.js",
   "scripts": {
@@ -17,8 +17,9 @@
     "url": "git+https://github.com/leleofg/cubos-cli.git"
   },
   "keywords": [
-    "cli",
-    "typescript"
+    "typescript",
+    "nodejs",
+    "cli"
   ],
   "author": "Leonardo Farias",
   "license": "ISC",
@@ -28,7 +29,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "homepage": "https://github.com/leleofg/cubos-cli#readme",
+  "homepage": "https://github.com/leleofg/cubos-cli",
   "devDependencies": {
     "@types/command-line-args": "^5.0.0",
     "@types/command-line-usage": "^5.0.1",

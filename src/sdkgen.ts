@@ -1,5 +1,5 @@
 import { appendFileSync, writeFileSync } from "fs";
-import { checkLineExistsInFile, firstWordToUppercase } from "./helpers";
+import { checkLineExistsInFile, firstWordToUppercase, primitivesSdkgen } from "./helpers";
 
 export function generateSdkgen(component: string, functions?: string[]) {
   if (checkLineExistsInFile("src/api.sdkgen", component)) {
@@ -20,7 +20,10 @@ export function generateSdkgen(component: string, functions?: string[]) {
                 const argsAndTypes = args
                   .map(arg => {
                     const [nameArg, typeArg] = arg.split(":");
-                    // TODO: need validate typeArg to primitive types sdkgen
+
+                    if (!primitivesSdkgen.includes(typeArg)) {
+                      throw new Error("Type primitive invalid for sdkgen");
+                    }
 
                     return `${nameArg}: ${typeArg}`;
                   })
@@ -30,6 +33,10 @@ export function generateSdkgen(component: string, functions?: string[]) {
               }
 
               const [nameArg, typeArg] = args[0].split(":");
+
+              if (!primitivesSdkgen.includes(typeArg)) {
+                throw new Error("Type primitive invalid for sdkgen");
+              }
 
               return `fn ${nameFunction}(${nameArg}: ${typeArg}): string\n`;
             }
