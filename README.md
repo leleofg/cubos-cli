@@ -34,3 +34,8 @@
     + `$ cubos-cli -c ted -f getHistoryTed#cpf:string saveHistoryTed#cpf:string,value:money -t -m cpf:string value:number`
 5. Helper
     + `$ cubos-cli -h`
+    
+**After running what should i do?**
+---
+
+`$ npm run sdkgen`
