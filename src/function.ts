@@ -8,18 +8,26 @@ export function generateFunctions(component: string, functions?: string[]) {
     functions && functions.length
       ? functions
           .map(fun => {
+            if (fun.split("#").length > 2) {
+              throw new Error("format functions wrong.");
+            }
+
             const [nameFunction, argsFunction] = fun.split("#");
 
             if (argsFunction) {
               const args = argsFunction.split(",");
 
+              if (args[args.length - 1] === "") {
+                throw new Error("format functions wrong.");
+              }
+
               if (args.length > 1) {
-                let a = "";
+                let argsConcat = "";
                 const argsNames = args
                   .map(arg => {
                     const [nameArg] = arg.split(":");
 
-                    a += `\${${nameArg}} `;
+                    argsConcat += `\${${nameArg}} `;
 
                     return nameArg;
                   })
@@ -27,7 +35,7 @@ export function generateFunctions(component: string, functions?: string[]) {
 
                 return `
 api.fn.${nameFunction} = async (ctx, { ${argsNames.join(", ")} }) => {
-  return \`${a}\`;
+  return \`${argsConcat}\`;
 };\n`;
               }
 

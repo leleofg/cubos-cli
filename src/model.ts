@@ -1,5 +1,5 @@
 import { appendFileSync, writeFileSync } from "fs";
-import { checkLineExistsInFile, firstWordToUppercase, primitivesTypeorm } from "./helpers";
+import { checkLineExistsInFile, firstWordToUppercase, primitiveTypescript } from "./helpers";
 import pluralize from "pluralize";
 
 export function generateModel(component: string, fields?: string[]) {
@@ -18,9 +18,13 @@ export class ${firstWordToUppercase(component)} {
     fields && fields.length
       ? fields
           .map(field => {
+            if (field.split(":").length > 2) {
+              throw new Error("format model wrong.");
+            }
+
             const [nameField, typeField] = field.split(":");
 
-            if (!primitivesTypeorm.includes(typeField)) {
+            if (!primitiveTypescript.includes(typeField)) {
               throw new Error("Type primitive invalid for typeorm");
             }
 

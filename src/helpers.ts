@@ -79,6 +79,22 @@ export function checkLineExistsInFile(path: string, element: string) {
   return false;
 }
 
+export function removeLineExistsInFile(path: string, element: string) {
+  const file = readFileSync(path)
+    .toString()
+    .split("\n");
+
+  for (const [index, line] of file.entries()) {
+    if (line.indexOf(element) > 0) {
+      file.splice(index, 1, "");
+    }
+  }
+
+  file.pop();
+
+  writeFileSync(path, file.join("\n"));
+}
+
 export const primitivesSdkgen = [
   "bool",
   "int",
@@ -101,69 +117,4 @@ export const primitivesSdkgen = [
   "json",
 ];
 
-export const primitivesTypeorm = [
-  "int",
-  "int2",
-  "int4",
-  "int8",
-  "smallint",
-  "integer",
-  "bigint",
-  "decimal",
-  "numeric",
-  "real",
-  "float",
-  "float4",
-  "float8",
-  "double precision",
-  "money",
-  "character varying",
-  "varchar",
-  "character",
-  "char",
-  "text",
-  "citext",
-  "hstore",
-  "bytea",
-  "bit",
-  "varbit",
-  "bit varying",
-  "timetz",
-  "timestamptz",
-  "timestamp",
-  "timestamp without time zone",
-  "timestamp with time zone",
-  "date",
-  "time",
-  "time without time zone",
-  "time with time zone",
-  "interval",
-  "bool",
-  "boolean",
-  "enum",
-  "point",
-  "line",
-  "lseg",
-  "box",
-  "path",
-  "polygon",
-  "circle",
-  "cidr",
-  "inet",
-  "macaddr",
-  "tsvector",
-  "tsquery",
-  "uuid",
-  "xml",
-  "json",
-  "jsonb",
-  "int4range",
-  "int8range",
-  "numrange",
-  "tsrange",
-  "tstzrange",
-  "daterange",
-  "geometry",
-  "geography",
-  "cube",
-];
+export const primitiveTypescript = ["string", "string[]", "number", "number[]", "boolean", "Date"];

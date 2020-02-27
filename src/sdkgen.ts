@@ -6,45 +6,45 @@ export function generateSdkgen(component: string, functions?: string[]) {
     return;
   }
 
-  writeFileSync(
-    `src/schemas/${component}.sdkgen`,
+  const contentFile =
     functions && functions.length
       ? functions
           .map(fun => {
             const [nameFunction, argsFunction] = fun.split("#");
 
-            if (argsFunction) {
-              const args = argsFunction.split(",");
-
-              if (args.length > 1) {
-                const argsAndTypes = args
-                  .map(arg => {
-                    const [nameArg, typeArg] = arg.split(":");
-
-                    if (!primitivesSdkgen.includes(typeArg)) {
-                      throw new Error("Type primitive invalid for sdkgen");
-                    }
-
-                    return `${nameArg}: ${typeArg}`;
-                  })
-                  .join(", ");
-
-                return `fn ${nameFunction}(${argsAndTypes}): string\n`;
-              }
-
-              const [nameArg, typeArg] = args[0].split(":");
-
-              if (!primitivesSdkgen.includes(typeArg)) {
-                throw new Error("Type primitive invalid for sdkgen");
-              }
-
-              return `fn ${nameFunction}(${nameArg}: ${typeArg}): string\n`;
+            if (!argsFunction) {
+              return `fn ${nameFunction}(): string\n`;
             }
 
-            return `fn ${nameFunction}(): string\n`;
+            const args = argsFunction.split(",");
+
+            if (args.length > 1) {
+              const argsAndTypes = args
+                .map(arg => {
+                  const [nameArg, typeArg] = arg.split(":");
+
+                  if (!primitivesSdkgen.includes(typeArg)) {
+                    throw new Error("Type primitive invalid for sdkgen");
+                  }
+
+                  return `${nameArg}: ${typeArg}`;
+                })
+                .join(", ");
+
+              return `fn ${nameFunction}(${argsAndTypes}): string\n`;
+            }
+
+            const [nameArg, typeArg] = args[0].split(":");
+
+            if (!primitivesSdkgen.includes(typeArg)) {
+              throw new Error("Type primitive invalid for sdkgen");
+            }
+
+            return `fn ${nameFunction}(${nameArg}: ${typeArg}): string\n`;
           })
           .join("")
-      : `fn get${firstWordToUppercase(component)}(): string\n`,
-  );
+      : `fn get${firstWordToUppercase(component)}(): string\n`;
+
+  writeFileSync(`src/schemas/${component}.sdkgen`, contentFile);
   appendFileSync("src/api.sdkgen", `import "./schemas/${component}"\n`);
 }

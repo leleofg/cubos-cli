@@ -7,6 +7,8 @@ import { generateTest } from "./test";
 import { generateModel } from "./model";
 import { generateRepository } from "./repository";
 import { generateSdkgen } from "./sdkgen";
+import { existsSync, unlinkSync } from "fs";
+import { firstWordToUppercase, removeLineExistsInFile } from "./helpers";
 
 enum Database {
   typeorm,
@@ -129,24 +131,56 @@ if (options.database !== Database.typeorm) {
   throw new Error("For now works only with typeorm.");
 }
 
-if (generateController(options.component)) {
-  generateFunctions(options.component, options.functions);
-}
-
-generateSdkgen(options.component, options.functions);
-
-if (options.model) {
-  generateModel(options.component, options.model);
-}
-
-if (options.repository) {
-  if (!options.model) {
-    throw new Error("You need to provide model when use repository.");
+try {
+  if (generateController(options.component)) {
+    generateFunctions(options.component, options.functions);
   }
 
-  generateRepository(options.component);
-}
+  generateSdkgen(options.component, options.functions);
 
-if (options.test) {
-  generateTest(options.component, options.functions);
+  if (options.model) {
+    generateModel(options.component, options.model);
+  }
+
+  if (options.test) {
+    generateTest(options.component, options.functions);
+  }
+
+  if (options.repository) {
+    if (!options.model) {
+      throw new Error("You need to provide model when use repository.");
+    }
+
+    generateRepository(options.component);
+  }
+} catch (error) {
+  // Controller
+  unlinkSync(`src/controllers/${options.component.toLocaleLowerCase()}.ts`);
+  removeLineExistsInFile("src/controllers/index.ts", options.component.toLocaleLowerCase());
+
+  // Sdkgen
+  if (existsSync(`src/schemas/${options.component.toLocaleLowerCase()}.sdkgen`)) {
+    unlinkSync(`src/schemas/${options.component.toLocaleLowerCase()}.sdkgen`);
+    removeLineExistsInFile("src/api.sdkgen", options.component.toLocaleLowerCase());
+  }
+
+  // Model
+  if (existsSync(`src/models/${firstWordToUppercase(options.component)}.ts`)) {
+    unlinkSync(`src/models/${firstWordToUppercase(options.component)}.ts`);
+    removeLineExistsInFile("src/models/index.ts", firstWordToUppercase(options.component));
+  }
+
+  // Tests
+  if (existsSync(`tests/${options.component.toLocaleLowerCase()}.test.ts`)) {
+    unlinkSync(`tests/${options.component.toLocaleLowerCase()}.test.ts`);
+  }
+
+  // Repository
+  if (existsSync(`src/repositories/${firstWordToUppercase(options.component)}Repository.ts`)) {
+    unlinkSync(`src/repositories/${firstWordToUppercase(options.component)}Repository.ts`);
+    removeLineExistsInFile("src/models/index.ts", `${firstWordToUppercase(options.component)}Repository`);
+  }
+
+  console.log(error.message);
+  console.log("cubos-cli -h for more information");
 }

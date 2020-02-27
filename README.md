@@ -31,6 +31,6 @@
 3. Create a controller with model and tests
     + `$ cubos-cli -c ted -m cpf:string value:number -t`
 4. Create a controller with functions, create a model and tests
-    + `$ cubos-cli -c ted -f getHistoryTed#cpf:string saveHistoryTed#cpf:string,value:number -t -m cpf:string value:number`
-5. Help
+    + `$ cubos-cli -c ted -f getHistoryTed#cpf:string saveHistoryTed#cpf:string,value:money -t -m cpf:string value:number`
+5. Helper
     + `$ cubos-cli -h`
