@@ -123,12 +123,12 @@ if (options.help) {
   throw new Error("");
 }
 
-if (!options.component) {
-  throw new Error("You need to provide the component.\n\ncubos-cli -h for more information");
-}
-
 if (options.database !== Database.typeorm) {
   throw new Error("For now works only with typeorm.");
+}
+
+if (!options.component) {
+  throw new Error("You need to provide the component.\n\ncubos-cli -h for more information");
 }
 
 try {

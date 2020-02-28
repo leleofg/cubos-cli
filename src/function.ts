@@ -55,7 +55,7 @@ api.fn.${nameFunction} = async ctx => {
           .join("")
       : `
 api.fn.get${firstWordToUppercase(component)} = async ctx => {
-  return "";
+  return "test";
 };\n`,
   );
 }

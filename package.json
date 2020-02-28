@@ -1,6 +1,6 @@
 {
   "name": "cubos-cli",
-  "version": "1.0.20",
+  "version": "1.0.21",
   "description": "Cubos CLI",
   "main": "bin/index.js",
   "scripts": {
@@ -11,7 +11,7 @@
   "bin": {
     "cubos-cli": "./bin/index.js"
   },
-  "prepare" : "npm run build",
+  "prepare": "npm run build",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/leleofg/cubos-cli.git"

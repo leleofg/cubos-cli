@@ -29,4 +29,11 @@ export class ${firstWordToUppercase(component)}Repository extends Repository<${f
     .split("\n");
 
   replaceRepositoriesDB(component, fileServer, "src/server.ts");
+
+  // Test
+  const fileHelpersTest = readFileSync("tests/helpers.ts")
+    .toString()
+    .split("\n");
+
+  replaceRepositoriesDB(component, fileHelpersTest, "tests/helpers.ts");
 }

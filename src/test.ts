@@ -2,6 +2,22 @@
 import { writeFileSync } from "fs";
 import { firstWordToUppercase } from "./helpers";
 
+function getTypeArg(typeArg: string) {
+  if (typeArg === "int" || typeArg === "uint" || typeArg === "float" || typeArg === "money") {
+    return 1;
+  }
+
+  if (typeArg === "bool") {
+    return "true";
+  }
+
+  if (typeArg === "date" || typeArg === "datetime") {
+    return "01-02-2020";
+  }
+
+  return "test";
+}
+
 export function generateTest(component: string, functions?: string[]) {
   const scriptTest = `import { apiTestWrapper } from "@sdkgen/node-runtime";
 import { api, Context } from "../src/api";
@@ -31,7 +47,7 @@ describe("${firstWordToUppercase(component)}", () => {
                   .map(arg => {
                     const [nameArg, typeArg] = arg.split(":");
 
-                    return `${nameArg}: ${typeArg === "int" ? 1 : `\`test\``}`;
+                    return `${nameArg}: ${getTypeArg(typeArg)}`;
                   })
                   .sort()
                   .join(", ");
@@ -48,7 +64,7 @@ describe("${firstWordToUppercase(component)}", () => {
               const [nameArg, typeArg] = args[0].split(":");
 
               return `test("${nameFunction}: should return a string", async () => {
-    const res = await fn.${nameFunction}(ctx, { ${nameArg}: ${typeArg === "int" ? 1 : `\`test\``} });
+    const res = await fn.${nameFunction}(ctx, { ${nameArg}: ${getTypeArg(typeArg)} });
 
     expect(res).toBeTruthy();
     expect(typeof res).toBe("string");
