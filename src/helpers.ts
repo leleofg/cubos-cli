@@ -30,7 +30,7 @@ export function replaceRepositoriesDB(component: string, file: string[], path: s
   let lineToReplaceDB = "";
 
   for (const [index, line] of file.entries()) {
-    if (line.indexOf("./repositories") > 0) {
+    if (line.indexOf("repositories") > 0) {
       numberLine = index;
       const newLine = line.split("{");
       const newLine2 = newLine[1].split("}");
@@ -45,15 +45,23 @@ export function replaceRepositoriesDB(component: string, file: string[], path: s
       arrayOfRepositories.sort();
       const newRepositories = arrayOfRepositories.join(", ");
 
-      lineToReplaceRepositories = `import { ${newRepositories} } from "./repositories";`;
+      if (path === "tests/helpers.ts") {
+        lineToReplaceRepositories = `import { ${newRepositories} } from "../src/repositories";`;
+      } else {
+        lineToReplaceRepositories = `import { ${newRepositories} } from "./repositories";`;
+      }
     }
 
     if (line.indexOf("db: {") > 0) {
       lineDB = checkObject(file, component.toLowerCase(), index + 1);
       if (path === "src/api.ts") {
         lineToReplaceDB = `    ${component.toLowerCase()}: ${firstWordToUppercase(component)}Repository;`;
-      } else {
+      } else if (path === "src/server.ts") {
         lineToReplaceDB = `        ${component.toLowerCase()}: connection.getCustomRepository(${firstWordToUppercase(
+          component,
+        )}Repository),`;
+      } else {
+        lineToReplaceDB = `      ${component.toLowerCase()}: connection.getCustomRepository(${firstWordToUppercase(
           component,
         )}Repository),`;
       }

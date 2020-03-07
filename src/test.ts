@@ -47,7 +47,7 @@ describe("${firstWordToUppercase(component)}", () => {
                   .map(arg => {
                     const [nameArg, typeArg] = arg.split(":");
 
-                    return `${nameArg}: ${getTypeArg(typeArg)}`;
+                    return `${nameArg}: "${getTypeArg(typeArg)}"`;
                   })
                   .sort()
                   .join(", ");
@@ -64,7 +64,7 @@ describe("${firstWordToUppercase(component)}", () => {
               const [nameArg, typeArg] = args[0].split(":");
 
               return `test("${nameFunction}: should return a string", async () => {
-    const res = await fn.${nameFunction}(ctx, { ${nameArg}: ${getTypeArg(typeArg)} });
+    const res = await fn.${nameFunction}(ctx, { ${nameArg}: "${getTypeArg(typeArg)}" });
 
     expect(res).toBeTruthy();
     expect(typeof res).toBe("string");
