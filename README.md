@@ -30,9 +30,11 @@
     + `$ cubos-cli -c ted -t`
 3. Create a controller with model and tests
     + `$ cubos-cli -c ted -m cpf:string value:number -t`
-4. Create a controller with functions, create a model and tests
+4. Create a controller with functions,  model and tests
     + `$ cubos-cli -c ted -f getHistoryTed#cpf:string saveHistoryTed#cpf:string,value:money -t -m cpf:string value:number`
-5. Helper
+5. Create a controller with functions,  model, tests and repository
+    + `$ cubos-cli -c ted -f getHistoryTed#cpf:string saveHistoryTed#cpf:string,value:money -t -m cpf:string value:number -r`
+6. Helper
     + `$ cubos-cli -h`
     
 **After running what should i do?**
