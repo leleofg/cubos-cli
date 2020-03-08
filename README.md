@@ -15,6 +15,11 @@
   </a>
 </p>
 
+**Dependencies**
+---
+
+A project based on the *api-typescript-sdkgen-typeorm*
+
 **Installation**
 ---
 
@@ -36,8 +41,14 @@
     + `$ npx cubos-cli -c ted -f getHistoryTed#cpf:string saveHistoryTed#cpf:string,value:money -t -m cpf:string value:number -r`
 6. Helper
     + `$ npx cubos-cli -h`
-    
+
 **After running what should i do?**
 ---
 
 `$ npm run sdkgen`
+
+
+**Interesting Links**
+---
+
+[`sdkgen`](https://github.com/sdkgen/sdkgen)
