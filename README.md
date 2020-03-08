@@ -19,23 +19,23 @@
 ---
 
 1. Install with [`npm`](https://www.npmjs.com/package/cubos-cli)
-    + `$ npm install cubos-cli`
+    + `$ npm i -D cubos-cli`
 
 **How To Use**
 ---
 
 1. Create a controller
-    + `$ cubos-cli -c ted`
+    + `$ npx cubos-cli -c ted`
 2. Create a controller with tests
-    + `$ cubos-cli -c ted -t`
+    + `$ npx cubos-cli -c ted -t`
 3. Create a controller with model and tests
-    + `$ cubos-cli -c ted -m cpf:string value:number -t`
+    + `$ npx cubos-cli -c ted -m cpf:string value:number -t`
 4. Create a controller with functions,  model and tests
-    + `$ cubos-cli -c ted -f getHistoryTed#cpf:string saveHistoryTed#cpf:string,value:money -t -m cpf:string value:number`
+    + `$ npx cubos-cli -c ted -f getHistoryTed#cpf:string saveHistoryTed#cpf:string,value:money -t -m cpf:string value:number`
 5. Create a controller with functions,  model, tests and repository
-    + `$ cubos-cli -c ted -f getHistoryTed#cpf:string saveHistoryTed#cpf:string,value:money -t -m cpf:string value:number -r`
+    + `$ npx cubos-cli -c ted -f getHistoryTed#cpf:string saveHistoryTed#cpf:string,value:money -t -m cpf:string value:number -r`
 6. Helper
-    + `$ cubos-cli -h`
+    + `$ npx cubos-cli -h`
     
 **After running what should i do?**
 ---
