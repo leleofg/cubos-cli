@@ -2,7 +2,7 @@ import { appendFileSync, writeFileSync } from "fs";
 import { checkLineExistsInFile, firstWordToUppercase, primitivesSdkgen } from "./helpers";
 
 export function generateSdkgen(component: string, functions?: string[]) {
-  if (checkLineExistsInFile("src/api.sdkgen", component)) {
+  if (checkLineExistsInFile("src/api.sdkgen", component.toLocaleLowerCase())) {
     return;
   }
 

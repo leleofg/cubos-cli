@@ -2,7 +2,7 @@ import { appendFileSync, readFileSync, writeFileSync } from "fs";
 import { checkLineExistsInFile, firstWordToUppercase, replaceRepositoriesDB } from "./helpers";
 
 export function generateRepository(component: string) {
-  if (checkLineExistsInFile("src/repositories/index.ts", component)) {
+  if (checkLineExistsInFile("src/repositories/index.ts", firstWordToUppercase(component))) {
     return;
   }
 

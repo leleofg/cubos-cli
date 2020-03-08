@@ -2,7 +2,7 @@ import { appendFileSync, writeFileSync } from "fs";
 import { checkLineExistsInFile } from "./helpers";
 
 export function generateController(component: string) {
-  if (checkLineExistsInFile("src/controllers/index.ts", component)) {
+  if (checkLineExistsInFile("src/controllers/index.ts", component.toLocaleLowerCase())) {
     return false;
   }
 

@@ -3,7 +3,7 @@ import { checkLineExistsInFile, firstWordToUppercase, primitiveTypescript } from
 import pluralize from "pluralize";
 
 export function generateModel(component: string, fields?: string[]) {
-  if (checkLineExistsInFile("src/models/index.ts", component)) {
+  if (checkLineExistsInFile("src/models/index.ts", firstWordToUppercase(component))) {
     return;
   }
 
