@@ -5,7 +5,7 @@
   "main": "bin/index.js",
   "scripts": {
     "eslint:fix": "eslint --fix '**/*.{t,j}s'",
-    "eslint:check": "eslint '**/*.{t,j}s'",
+    "eslint:check": "eslint '**/*.ts'",
     "build": "tsc"
   },
   "bin": {
